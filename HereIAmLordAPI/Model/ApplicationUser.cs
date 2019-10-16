@@ -11,7 +11,7 @@ namespace HereIAmLordAPIAccount.Model
         [Required]
         public string LastName { get; set; }
         [Required]
-        public DateTime Bday { get; set; }
+        public string Bday { get; set; }
         public string Description { get; set; }
 
     }
