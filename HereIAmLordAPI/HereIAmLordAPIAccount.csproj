@@ -15,10 +15,14 @@
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Model\AccountViewModels\" />
+    <Folder Include="Model\ManageViewModels\" />
+    <Folder Include="Certificate\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="3.0.1" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
   </ItemGroup>
 </Project>
