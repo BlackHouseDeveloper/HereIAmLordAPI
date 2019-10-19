@@ -11,7 +11,7 @@ namespace HereIAmLordAPIAccount.Configuration
         {
             return new List<ApiResource>
             {
-
+                new ApiResource("webhooks", "Webhooks registration Service")
             };
         }
 
@@ -32,22 +32,66 @@ namespace HereIAmLordAPIAccount.Configuration
             return new List<Client>
             {
                 new Client
-            {
-                ClientId = "xamarin",
-                ClientName = "eShop Xamarin OpenId Client",
-                AllowedGrantTypes = GrantTypes.Implicit,
-                AllowAccessTokensViaBrowser = true,
-                RedirectUris = { clientsUrl["Xamarin"] },
-                RequireConsent = false,
-                PostLogoutRedirectUris = { "http://13.88.8.119:5105/Account/Redirecting", "http://10.6.1.234:5105/Account/Redirecting" },
-                AllowedCorsOrigins = { "http://eshopxamarin" },
-                AllowedScopes =
+                {
+                    ClientId = "xamarin",
+                    ClientName = "eShop Xamarin OpenId Client",
+                    AllowedGrantTypes = GrantTypes.Hybrid,                    
+                    //Used to retrieve the access token on the back channel.
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    RedirectUris = { clientsUrl["Xamarin"] },
+                    RequireConsent = false,
+                    RequirePkce = true,
+                    PostLogoutRedirectUris = { $"{clientsUrl["Xamarin"]}/Account/Redirecting" },
+                    //AllowedCorsOrigins = { "http://eshopxamarin" },
+                    AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        
+                        "webhooks"
+                    },
+                    //Allow requesting refresh tokens for long lived API access
+                    AllowOfflineAccess = true,
+                    AllowAccessTokensViaBrowser = true
+                },
 
-                    }
-            }
+
+                new Client
+                {
+                    ClientId = "webhooksclient",
+                    ClientName = "Webhooks Client",
+                    ClientSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    ClientUri = $"{clientsUrl["WebhooksWeb"]}",                             // public uri of the client
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowAccessTokensViaBrowser = false,
+                    RequireConsent = false,
+                    AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    RedirectUris = new List<string>
+                    {
+                        $"{clientsUrl["WebhooksWeb"]}/signin-oidc"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        $"{clientsUrl["WebhooksWeb"]}/signout-callback-oidc"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "webhooks"
+                    },
+                    AccessTokenLifetime = 60*60*2, // 2 hours
+                    IdentityTokenLifetime= 60*60*2 // 2 hours
+                }
 
             };
 

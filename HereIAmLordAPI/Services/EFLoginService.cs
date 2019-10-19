@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using HereIAmLordAPIAccount.Model;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace HereIAmLordAPIAccount.Services
 {
     public class EFLoginService : ILoginService<ApplicationUser>
     {
-        UserManager<ApplicationUser> _userManager;
-        SignInManager<ApplicationUser> _signInManager;
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
 
         public EFLoginService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
@@ -29,6 +30,11 @@ namespace HereIAmLordAPIAccount.Services
         public Task SignIn(ApplicationUser user)
         {
             return _signInManager.SignInAsync(user, true);
+        }
+
+        public Task SignInAsync(ApplicationUser user, AuthenticationProperties properties, string authenticationMethod = null)
+        {
+            return _signInManager.SignInAsync(user, properties, authenticationMethod);
         }
     }
 }

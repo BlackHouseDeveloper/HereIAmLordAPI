@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Models;
 using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HereIAmLordAPIAccount.Services
 {
@@ -68,7 +69,9 @@ namespace HereIAmLordAPIAccount.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtClaimTypes.Subject, user.Id),
-                new Claim(JwtClaimTypes.PreferredUserName, user.UserName)
+                new Claim(JwtClaimTypes.PreferredUserName, user.UserName),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+
             };
 
             if (!string.IsNullOrWhiteSpace(user.FirstName))
