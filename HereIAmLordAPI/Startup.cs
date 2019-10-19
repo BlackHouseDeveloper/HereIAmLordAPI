@@ -21,7 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using HealthChecks.UI.Client;
-
+using Microsoft.Extensions.Hosting;
 
 namespace HereIAmLordAPIAccount
 {
@@ -64,8 +64,9 @@ namespace HereIAmLordAPIAccount
                 services.AddDataProtection(opts =>
                 {
                     opts.ApplicationDiscriminator = "hereiamlord.identity";
+                    
                 })
-                .PersistKeysToRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
+                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys");
             }
 
             services.AddHealthChecks()
@@ -117,7 +118,7 @@ namespace HereIAmLordAPIAccount
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, ILoggerFactory loggerFactory)
         {
             //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             //loggerFactory.AddDebug();

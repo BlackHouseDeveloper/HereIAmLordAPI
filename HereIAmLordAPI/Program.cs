@@ -6,8 +6,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace HereIAmLordAPIAccount
@@ -29,6 +29,7 @@ namespace HereIAmLordAPIAccount
                 var host = BuildWebHost(configuration, args);
 
                 Log.Information("Applying migrations ({ApplicationContext})...", AppName);
+                
                 host.MigrateDbContext<PersistedGrantDbContext>((_, __) => { })
                     .MigrateDbContext<ApplicationDbContext>((context, services) =>
                     {
