@@ -22,8 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HereIAmLordAPIAccount.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    
     public class AccountController : Controller
     {
         //private readonly InMemoryUserLoginService _loginService;

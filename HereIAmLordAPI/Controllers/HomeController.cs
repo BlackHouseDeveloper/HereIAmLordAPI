@@ -12,8 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace HereIAmLordAPIAccount.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+   
     public class HomeController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;

@@ -34,7 +34,7 @@ namespace HereIAmLordAPIAccount.Configuration
                 new Client
                 {
                     ClientId = "xamarin",
-                    ClientName = "eShop Xamarin OpenId Client",
+                    ClientName = "HereIAmLord Xamarin OpenId Client",
                     AllowedGrantTypes = GrantTypes.Hybrid,                    
                     //Used to retrieve the access token on the back channel.
                     ClientSecrets =
@@ -45,7 +45,7 @@ namespace HereIAmLordAPIAccount.Configuration
                     RequireConsent = false,
                     RequirePkce = true,
                     PostLogoutRedirectUris = { $"{clientsUrl["Xamarin"]}/Account/Redirecting" },
-                    //AllowedCorsOrigins = { "http://eshopxamarin" },
+                    //AllowedCorsOrigins = { "http://hereiamlordxamarin" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

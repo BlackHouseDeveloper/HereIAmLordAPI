@@ -13,8 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HereIAmLordAPIAccount.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    
     public class ConsentController : Controller
     {
         private readonly ILogger<ConsentController> _logger;

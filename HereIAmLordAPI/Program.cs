@@ -6,6 +6,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -33,7 +34,7 @@ namespace HereIAmLordAPIAccount
                 host.MigrateDbContext<PersistedGrantDbContext>((_, __) => { })
                     .MigrateDbContext<ApplicationDbContext>((context, services) =>
                     {
-                        var env = services.GetService<IHostingEnvironment>();
+                        var env = services.GetService<IWebHostEnvironment>();
                         var logger = services.GetService<ILogger<ApplicationDbContextSeed>>();
                         var settings = services.GetService<IOptions<AppSettings>>();
 
