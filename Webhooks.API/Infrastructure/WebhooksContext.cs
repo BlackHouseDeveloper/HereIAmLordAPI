@@ -1,4 +1,8 @@
 ﻿using System;
+using Webhooks.API.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+
 namespace Webhooks.API.Infrastructure
 {
     public class WebhooksContext : DbContext

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Webhooks.API.Services
 {
-    public class IdentityService : IIdentityService
+    public class IdentityService 
     {
         private IHttpContextAccessor _context;
 

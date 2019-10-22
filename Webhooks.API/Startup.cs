@@ -1,20 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using HealthChecks.UI.Client;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.ServiceFabric;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Webhooks.API.Infrastructure;
 using Webhooks.API.Services;
+//using Webhooks.API.IntegrationEvent;
 
 namespace Webhooks.API
 {
@@ -34,8 +48,8 @@ namespace Webhooks.API
                 .AddAppInsight(Configuration)
                 .AddCustomMVC(Configuration)
                 .AddCustomDbContext(Configuration)
-                .AddSwagger(Configuration)
-                .AddCustomHealthCheck(Configuration)
+                .AddSwagger(Configuration).
+                AddCustomHealthCheck(Configuration)
                 .AddHttpClientServices(Configuration)
                 .AddIntegrationEventHandler()
                 .AddEventBus(Configuration)
@@ -79,6 +93,7 @@ namespace Webhooks.API
             ConfigureAuth(app);
 
             app.UseMvcWithDefaultRoute();
+            
 
             app.UseSwagger()
               .UseSwaggerUI(c =>
