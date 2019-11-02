@@ -4,10 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'HereIAmLordAPI' ">
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'HereIAmLord.Account' ">
     <StartAction>Project</StartAction>
-    <LaunchUrl>weatherforecast</LaunchUrl>
-    <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
+    <LaunchUrl>http://localhost:55105</LaunchUrl>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
@@ -56,7 +55,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Downloads\eShopOnContainers-dev 2\src\BuildingBlocks\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj">
+    <ProjectReference Include="..\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -53,11 +53,11 @@
     <Compile Remove="Controllers\WeatherForecastController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Downloads\eShopOnContainers-dev 2\src\BuildingBlocks\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj">
+    <ProjectReference Include="..\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
   </ItemGroup>
 </Project>

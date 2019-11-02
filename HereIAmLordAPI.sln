@@ -9,20 +9,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebHost.Customization", "WebHost.Customization", "{899DA499-0419-4A2A-83A5-76559C60B775}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{BE2F89BD-AB6C-43F4-9A3D-DFE9AED7A306}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{A0836280-42B1-48A7-9CE1-AE298E596663}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost.Customization", "..\..\Downloads\eShopOnContainers-dev 2\src\BuildingBlocks\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj", "{5193728F-5339-4CF8-BB16-CB9EC22271C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Webhooks", "Webhooks", "{8EC8EE22-62A7-4F08-867C-45F16318056B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.API", "Webhooks.API\Webhooks.API.csproj", "{BB1CD20A-D6BE-4499-88ED-FD82B59F7662}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF6BA4DD-27D0-4D89-84BA-BC480E62F1E3}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.prod.yml = docker-compose.prod.yml
 		docker-compose.yml = docker-compose.yml
+		docker-compose.nobuild.yml = docker-compose.nobuild.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommandBus", "CommandBus", "{4BE62850-4433-4A2F-A665-EF95768B4885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandBus", "..\..\Downloads\eShopOnContainers-cap\src\BuildingBlocks\CommandBus\CommandBus\CommandBus.csproj", "{3E2EB657-F2C6-416D-8550-B96549F24243}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4DE0B476-9F5D-41D0-A202-34B8593EDBBA}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\restore-packages = scripts\restore-packages
+		scripts\restore-packages.cmd = scripts\restore-packages.cmd
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost.Customization", "WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj", "{10BBC802-20BE-4137-A2C7-9E08B0E0A306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webhooks.API", "Webhooks.API\Webhooks.API.csproj", "{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,22 +45,27 @@ Global
 		{E9C8A7C9-76DE-4B43-B4AD-2FCFF72CABCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9C8A7C9-76DE-4B43-B4AD-2FCFF72CABCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9C8A7C9-76DE-4B43-B4AD-2FCFF72CABCE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5193728F-5339-4CF8-BB16-CB9EC22271C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5193728F-5339-4CF8-BB16-CB9EC22271C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5193728F-5339-4CF8-BB16-CB9EC22271C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5193728F-5339-4CF8-BB16-CB9EC22271C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB1CD20A-D6BE-4499-88ED-FD82B59F7662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB1CD20A-D6BE-4499-88ED-FD82B59F7662}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB1CD20A-D6BE-4499-88ED-FD82B59F7662}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB1CD20A-D6BE-4499-88ED-FD82B59F7662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E2EB657-F2C6-416D-8550-B96549F24243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E2EB657-F2C6-416D-8550-B96549F24243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E2EB657-F2C6-416D-8550-B96549F24243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E2EB657-F2C6-416D-8550-B96549F24243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10BBC802-20BE-4137-A2C7-9E08B0E0A306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BBC802-20BE-4137-A2C7-9E08B0E0A306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BBC802-20BE-4137-A2C7-9E08B0E0A306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BBC802-20BE-4137-A2C7-9E08B0E0A306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E9C8A7C9-76DE-4B43-B4AD-2FCFF72CABCE} = {A0836280-42B1-48A7-9CE1-AE298E596663}
 		{899DA499-0419-4A2A-83A5-76559C60B775} = {DCB24AD7-F0B6-47F3-A601-877DB26421D8}
-		{BE2F89BD-AB6C-43F4-9A3D-DFE9AED7A306} = {DCB24AD7-F0B6-47F3-A601-877DB26421D8}
 		{A0836280-42B1-48A7-9CE1-AE298E596663} = {D546F217-7F36-4D8E-8615-9CEE6312FA5F}
-		{5193728F-5339-4CF8-BB16-CB9EC22271C5} = {899DA499-0419-4A2A-83A5-76559C60B775}
 		{8EC8EE22-62A7-4F08-867C-45F16318056B} = {D546F217-7F36-4D8E-8615-9CEE6312FA5F}
-		{BB1CD20A-D6BE-4499-88ED-FD82B59F7662} = {8EC8EE22-62A7-4F08-867C-45F16318056B}
+		{4BE62850-4433-4A2F-A665-EF95768B4885} = {DCB24AD7-F0B6-47F3-A601-877DB26421D8}
+		{3E2EB657-F2C6-416D-8550-B96549F24243} = {4BE62850-4433-4A2F-A665-EF95768B4885}
+		{10BBC802-20BE-4137-A2C7-9E08B0E0A306} = {899DA499-0419-4A2A-83A5-76559C60B775}
+		{D6F6E500-42CB-4D4F-8AF7-FE09ACB9603B} = {8EC8EE22-62A7-4F08-867C-45F16318056B}
 	EndGlobalSection
 EndGlobal

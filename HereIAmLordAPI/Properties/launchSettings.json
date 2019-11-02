@@ -1,36 +1,17 @@
 {
-  "ConnectionString": "Server=tcp:127.0.0.1,5433;Database=HereIAmLordAPIAccount.IdentityDb;User Id=sa;Password=Pass@word;",
-  "IsClusterEnv": "False",
-  "MvcClient": "http://localhost:5100",
-  "SpaClient": "http://localhost:5104",
-  "XamarinCallback": "http://localhost:5105/xamarincallback",
-  "UseCustomizationData": false,
-  "Serilog": {
-    "SeqServerUrl": null,
-    "LogstashgUrl": null,
-    "MinimumLevel": {
-      "Default": "Information",
-      "Override": {
-        "Microsoft": "Warning",
-        "Microsoft.hereeiamlord": "Information",
-        "System": "Warning"
-      }
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:54010/",
+      "sslPort": 0
     }
-  },
-  "ApplicationInsights": {
-    "InstrumentationKey": ""
-  },
-  "UseVault": false,
-  "Vault": {
-    "Name": "hereiamlord",
-    "ClientId": "your-clien-id",
-    "ClientSecret": "your-client-secret"
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "http://localhost:55105",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -43,14 +24,13 @@
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
-    "HereIAmLordAPI": {
+    "HereIAmLord.Account": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "http://localhost:55105",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      }
     }
   }
 }

@@ -48,8 +48,8 @@ namespace Webhooks.API
                 .AddAppInsight(Configuration)
                 .AddCustomMVC(Configuration)
                 .AddCustomDbContext(Configuration)
-                .AddSwagger(Configuration).
-                AddCustomHealthCheck(Configuration)
+                .AddSwagger(Configuration)
+                .AddCustomHealthCheck(Configuration)
                 .AddHttpClientServices(Configuration)
                 .AddIntegrationEventHandler()
                 .AddEventBus(Configuration)
@@ -145,7 +145,7 @@ namespace Webhooks.API
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddControllersAsServices();
 
             services.AddCors(options =>
@@ -189,7 +189,7 @@ namespace Webhooks.API
                 options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
                 {
-                    Title = "eShopOnContainers - Webhooks HTTP API",
+                    Title = "HereIAmLord - Webhooks HTTP API",
                     Version = "v1",
                     Description = "The Webhooks Microservice HTTP API. This is a simple webhooks CRUD registration entrypoint",
                     TermsOfService = "Terms Of Service"
