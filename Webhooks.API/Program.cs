@@ -33,6 +33,15 @@ namespace Webhooks.API
                     builder.AddConsole();
                     builder.AddDebug();
                     builder.AddAzureWebAppDiagnostics();
+                })
+                .ConfigureLogging(
+                builder =>
+                {
+                    builder.AddApplicationInsights();
+
+                    //You can set log level here
+                    builder.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>
+                    ("", LogLevel.Information);
                 });
     }
 }

@@ -15,10 +15,10 @@
     <Folder Include="Model\" />
     <Folder Include="Model\AccountViewModels\" />
     <Folder Include="Model\ManageViewModels\" />
-    <Folder Include="Certificate\" />
     <Folder Include="Configuration\" />
     <Folder Include="Services\" />
     <Folder Include="Data\" />
+    <Folder Include="Certificate\" />    
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +54,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
+    
   <ItemGroup>
     <ProjectReference Include="..\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Certificate\idsrv3test.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Certificate\idsrv3test.pfx" />
   </ItemGroup>
 </Project>

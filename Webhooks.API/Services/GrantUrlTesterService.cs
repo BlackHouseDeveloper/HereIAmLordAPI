@@ -27,12 +27,12 @@ namespace Webhooks.API.Services
 
             var client = _clientFactory.CreateClient("GrantClient");
             var msg = new HttpRequestMessage(HttpMethod.Options, url);
-            msg.Headers.Add("X-eshop-whtoken", token);
+            msg.Headers.Add("X-hereiamlord-whtoken", token);
             _logger.LogInformation($"Sending the OPTIONS message to {url} with token {token ?? string.Empty}");
             try
             {
                 var response = await client.SendAsync(msg);
-                var tokenReceived = response.Headers.TryGetValues("X-eshop-whtoken", out var tokenValues) ? tokenValues.FirstOrDefault() : null;
+                var tokenReceived = response.Headers.TryGetValues("X-hereiamlord-whtoken", out var tokenValues) ? tokenValues.FirstOrDefault() : null;
                 var tokenExpected = string.IsNullOrWhiteSpace(token) ? null : token;
                 _logger.LogInformation($"Response code is {response.StatusCode} for url {url} and token in header was {tokenReceived} (expected token was {tokenExpected})");
                 return response.IsSuccessStatusCode && tokenReceived == tokenExpected;

@@ -41,12 +41,12 @@ namespace Webhooks.API
             Configuration = configuration;
         }
 
-
+        
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services
                 .AddAppInsight(Configuration)
-                .AddCustomMVC(Configuration)
+                .AddCustomRouting(Configuration)
                 .AddCustomDbContext(Configuration)
                 .AddSwagger(Configuration)
                 .AddCustomHealthCheck(Configuration)
@@ -65,9 +65,10 @@ namespace Webhooks.API
             return new AutofacServiceProvider(container.Build());
         }
 
+        
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
+            //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
 
             var pathBase = Configuration["PATH_BASE"];
 
@@ -75,25 +76,30 @@ namespace Webhooks.API
             {
                 loggerFactory.CreateLogger("init").LogDebug($"Using PATH BASE '{pathBase}'");
                 app.UsePathBase(pathBase);
+                
             }
-
-            app.UseHealthChecks("/hc", new HealthCheckOptions()
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
-
-            app.UseHealthChecks("/liveness", new HealthCheckOptions
-            {
-                Predicate = r => r.Name.Contains("self")
-            });
 
             app.UseCors("CorsPolicy");
 
             ConfigureAuth(app);
 
-            app.UseMvcWithDefaultRoute();
-            
+            //app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
+            });
+
 
             app.UseSwagger()
               .UseSwaggerUI(c =>
@@ -122,31 +128,18 @@ namespace Webhooks.API
         public static IServiceCollection AddAppInsight(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddApplicationInsightsTelemetry(configuration);
-            var orchestratorType = configuration.GetValue<string>("OrchestratorType");
+            services.AddApplicationInsightsKubernetesEnricher();
 
-            if (orchestratorType?.ToUpper() == "K8S")
-            {
-                // Enable K8s telemetry initializer
-                services.AddApplicationInsightsKubernetesEnricher();
-            }
-            if (orchestratorType?.ToUpper() == "SF")
-            {
-                // Enable SF telemetry initializer
-                services.AddSingleton<ITelemetryInitializer>((serviceProvider) =>
-                    new FabricTelemetryInitializer());
-            }
 
             return services;
         }
 
-        public static IServiceCollection AddCustomMVC(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomRouting(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMvc(options =>
+            services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddControllersAsServices();
+            });
 
             services.AddCors(options =>
             {
@@ -160,6 +153,7 @@ namespace Webhooks.API
 
             return services;
         }
+
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {

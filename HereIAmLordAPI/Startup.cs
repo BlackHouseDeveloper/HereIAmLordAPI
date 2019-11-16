@@ -22,6 +22,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 using HealthChecks.UI.Client;
 using Microsoft.Extensions.Hosting;
+using HereIAmLordAPIAccount.Certificates;
 
 namespace HereIAmLordAPIAccount
 {
@@ -56,8 +57,7 @@ namespace HereIAmLordAPIAccount
 
             services.Configure<AppSettings>(Configuration);
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             if (Configuration.GetValue<string>("IsClusterEnv") == bool.TrueString)
             {
@@ -89,7 +89,7 @@ namespace HereIAmLordAPIAccount
                 x.IssuerUri = "null";
                 x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
             })
-            .AddSigningCredential(Certificate.Certificate.Get()) 
+            .AddSigningCredential(Certificate.Get()) 
             .AddAspNetIdentity<ApplicationUser>()
             .AddConfigurationStore(options =>
             {
@@ -112,6 +112,10 @@ namespace HereIAmLordAPIAccount
                     });
             })
             .Services.AddTransient<IProfileService, ProfileService>();
+
+
+            services.AddControllers();
+            services.AddControllersWithViews();
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -144,16 +148,6 @@ namespace HereIAmLordAPIAccount
                 app.UsePathBase(pathBase);
             }
 
-            app.UseHealthChecks("/hc", new HealthCheckOptions()
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
-
-            app.UseHealthChecks("/liveness", new HealthCheckOptions
-            {
-                Predicate = r => r.Name.Contains("self")
-            });
 
             app.UseStaticFiles();
 
@@ -168,32 +162,30 @@ namespace HereIAmLordAPIAccount
             app.UseForwardedHeaders();
             // Adds IdentityServer
             app.UseIdentityServer();
+            app.UseRouting();
 
             app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
             });
         }
 
         private void RegisterAppInsights(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry(Configuration);
-            var orchestratorType = Configuration.GetValue<string>("OrchestratorType");
+            services.AddApplicationInsightsKubernetesEnricher();
 
-            if (orchestratorType?.ToUpper() == "K8S")
-            {
-                // Enable K8s telemetry initializer
-                services.AddApplicationInsightsKubernetesEnricher();
-            }
-            if (orchestratorType?.ToUpper() == "SF")
-            {
-                // Enable SF telemetry initializer
-                services.AddSingleton<ITelemetryInitializer>((serviceProvider) =>
-                    new FabricTelemetryInitializer());
-            }
         }
     }
 }
